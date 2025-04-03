@@ -1,4 +1,5 @@
 "use server"
+import { redirect } from "next/navigation";
 import { signIn } from "../auth"
 export const LoginAction= async (formData) =>{
      const email =formData.get("email");
@@ -8,5 +9,6 @@ export const LoginAction= async (formData) =>{
         email,
         password,
        redirect: false
-     })
+     });
+     redirect("/dashboard")
 }

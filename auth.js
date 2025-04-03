@@ -1,8 +1,7 @@
 import NextAuth from "next-auth";
 import Credentials from "next-auth/providers/credentials";
 import { LoginService } from "./service/login-service";
-
-export const {signIn} = NextAuth({
+export const {signIn,auth} = NextAuth({
   providers: [
     Credentials({
       credentials: {
@@ -19,5 +18,14 @@ export const {signIn} = NextAuth({
       },
     }),
   ],
+  callbacks: {
+    async jwt(token) {
+      return token;
+    },
+    async session(props) {
+      const { token } = props;
+      return token.token.user;
+    },
+  },
+  strategy: "jwt",
 });
-
